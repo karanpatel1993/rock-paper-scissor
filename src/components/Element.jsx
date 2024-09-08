@@ -1,9 +1,17 @@
+import { useDraggable } from "@dnd-kit/core";
 import React, { useState, useEffect } from "react";
 
-const Element = ({ element, index }) => {
+const Element = ({ element, id, onCollision }) => {
+  const gridWidth = window.innerWidth; // 50% of the window width
+  const gridHeight = window.innerHeight; // 50% of the window height
+
   const [position, setPosition] = useState({
-    x: Math.random() * (window.innerWidth - 50),
-    y: Math.random() * (window.innerHeight - 50),
+    x: Math.random() * (gridWidth - 50),
+    y: Math.random() * (gridHeight - 50),
+  });
+
+  const { attributes, listeners, setNodeRef, transform } = useDraggable({
+    id,
   });
 
   const directions = [
@@ -25,6 +33,7 @@ const Element = ({ element, index }) => {
     { x: 0.5, y: 1 },
   ];
 
+  // Move the element in a random direction within the grid bounds
   const moveElement = () => {
     const randomDirection =
       directions[Math.floor(Math.random() * directions.length)];
@@ -33,32 +42,30 @@ const Element = ({ element, index }) => {
     setPosition((prevPosition) => {
       const newX = Math.max(
         0,
-        Math.min(
-          window.innerWidth - 50,
-          prevPosition.x + randomDirection.x * stepSize
-        )
+        Math.min(gridWidth - 50, prevPosition.x + randomDirection.x * stepSize)
       );
       const newY = Math.max(
         0,
-        Math.min(
-          window.innerHeight - 50,
-          prevPosition.y + randomDirection.y * stepSize
-        )
+        Math.min(gridHeight - 50, prevPosition.y + randomDirection.y * stepSize)
       );
+
+      // Call onCollision to check for any collisions and pass the updated position
+      onCollision(id, { x: newX, y: newY });
+
       return { x: newX, y: newY };
     });
   };
 
   useEffect(() => {
-    const interval = setInterval(moveElement, 100);
+    const interval = setInterval(moveElement, 100); // Move element every 100ms
     return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
     const handleResize = () => {
       setPosition({
-        x: Math.random() * (window.innerWidth - 50),
-        y: Math.random() * (window.innerHeight - 50),
+        x: Math.random() * (gridWidth - 50),
+        y: Math.random() * (gridHeight - 50),
       });
     };
     window.addEventListener("resize", handleResize);
@@ -67,10 +74,15 @@ const Element = ({ element, index }) => {
 
   return (
     <div
+      ref={setNodeRef}
       className="absolute text-4xl transition-transform duration-100"
       style={{
-        transform: `translate(${position.x}px, ${position.y}px)`,
+        transform: `translate(${position.x + (transform?.x || 0)}px, ${
+          position.y + (transform?.y || 0)
+        }px)`,
       }}
+      {...listeners}
+      {...attributes}
     >
       {element}
     </div>
