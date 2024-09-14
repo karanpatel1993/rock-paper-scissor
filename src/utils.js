@@ -17,12 +17,8 @@ export const detectCollision = (pos1, pos2) => {
   // Define a more reasonable threshold for emoji collision detection
   const threshold = 50; // Adjust based on the size of the emojis
 
-  // Log distance and whether a collision is detected for debugging
-  console.log(`Distance: ${distance}, Threshold: ${threshold}`);
-
   // Return true if the distance is less than the threshold, indicating a collision
   if (distance < threshold) {
-    console.log("Detected collision");
     return true;
   }
 

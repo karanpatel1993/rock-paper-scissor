@@ -17,6 +17,17 @@ const Spwaner = ({ elements, top, left }) => {
     )
   );
 
+  const ElementMapping = {
+    "✂️": new Audio(`/sounds/scissor.mp3`),
+    "🪨": new Audio(`/sounds/rock.mp3`),
+    "📜": new Audio(`/sounds/paper.mp3`),
+  };
+
+  const playSound = (type) => {
+    const audio = ElementMapping[type];
+    audio.play();
+  };
+
   const handleCollision = (id, newPosition) => {
     setAllElements((prevElements) => {
       // Find the element that moved
@@ -34,17 +45,17 @@ const Spwaner = ({ elements, top, left }) => {
           e.id !== id && e.isVisible && detectCollision(e.position, newPosition)
       );
 
-      console.log("Collided Elements:", collidedElements);
-
       // Handle collisions based on Rock-Paper-Scissors rules
       collidedElements.forEach((e) => {
         if (isWinner(currentElement.type, e.type)) {
+          playSound(currentElement.type);
           // Make the losing element invisible
           updatedElements = updatedElements.map((el) =>
             el.id === e.id ? { ...el, isVisible: false } : el
           );
         } else if (isWinner(e.type, currentElement.type)) {
           // Make the current element invisible
+          playSound(currentElement.type);
           updatedElements = updatedElements.map((el) =>
             el.id === id ? { ...el, isVisible: false } : el
           );
