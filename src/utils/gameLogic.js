@@ -1,4 +1,4 @@
-import { isWinner, playSound } from "./elementUtils";
+import { isWinner, updateElementsAndPlaySound } from "./elementUtils";
 import { detectCollision } from "../utils";
 
 export const handleCollision = (
@@ -27,16 +27,20 @@ export const handleCollision = (
     // Handle collisions based on Rock-Paper-Scissors rules
     collidedElements.forEach((e) => {
       if (isWinner(currentElement.type, e.type)) {
-        playSound(currentElement.type);
-        // Make the losing element invisible
-        updatedElements = updatedElements.map((el) =>
-          el.id === e.id ? { ...el, type: currentElement.type } : el
+        updatedElements = updateElementsAndPlaySound(
+          e,
+          currentElement.type,
+          currentElement.type,
+          id,
+          updatedElements
         );
       } else if (isWinner(e.type, currentElement.type)) {
-        // Make the current element invisible
-        playSound(e.type);
-        updatedElements = updatedElements.map((el) =>
-          el.id === id ? { ...el, type: e.type } : el
+        updatedElements = updateElementsAndPlaySound(
+          e,
+          e.type,
+          currentElement.type,
+          id,
+          updatedElements
         );
       }
     });
@@ -45,7 +49,8 @@ export const handleCollision = (
     const types = new Set(updatedElements.map((el) => el.type));
     if (types.size === 1) {
       // Set the winner type and trigger game over
-      setWinnerType([...types][0]);
+      const winnerType = [...types][0];
+      setWinnerType(winnerType);
       setGameOver(true);
     }
 

@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Element from "./Element";
 import { handleCollision } from "../utils/gameLogic";
 import Title from "./Title";
 import { generateElements } from "../utils/elementUtils";
 import Button from "./Button";
+import { useRecoilState } from "recoil";
+import { elementWinCountState } from "../state/recoilState";
+import { ScoreCard } from "./Scorecard";
 
 const Spawner = ({ elements }) => {
+  const [winCount, setWinCount] = useRecoilState(elementWinCountState);
   const [allElements, setAllElements] = useState(generateElements(elements));
-
   const [gameOver, setGameOver] = useState(false);
   const [winnerType, setWinnerType] = useState(null);
 
@@ -17,12 +20,27 @@ const Spawner = ({ elements }) => {
     setWinnerType(null);
   };
 
+  const updateWinCount = (type) => {
+    console.log("Update win for type " + type);
+    setWinCount((prevCount) => ({
+      ...prevCount,
+      [type]: (prevCount[type] || 0) + 1,
+    }));
+  };
+
+  useEffect(() => {
+    if (gameOver && winnerType) {
+      updateWinCount(winnerType);
+    }
+  }, [gameOver, winnerType]);
+
   if (gameOver) {
     return (
       <div className="flex flex-col items-center justify-center h-screen">
         <Title title="Game Over!" />
         <Title title="Wins!" icon={winnerType} />
         <Button method={resetGame} title="Play Again" />
+        <ScoreCard winCount={winCount} />
       </div>
     );
   }

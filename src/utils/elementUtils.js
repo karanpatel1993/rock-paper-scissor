@@ -1,3 +1,9 @@
+export const elements = [
+  { element: "📜", count: 50 },
+  { element: "🪨", count: 50 },
+  { element: "✂️", count: 50 },
+];
+
 export const ElementMapping = {
   "✂️": new Audio(`/sounds/scissor.mp3`),
   "🪨": new Audio(`/sounds/rock.mp3`),
@@ -27,5 +33,22 @@ export const generateElements = (elements) => {
         y: Math.random() * window.innerHeight * 0.5,
       },
     }))
+  );
+};
+
+export const updateElementsAndPlaySound = (
+  el,
+  newType,
+  currentElementType,
+  id,
+  updatedElements
+) => {
+  playSound(newType);
+  return updatedElements.map((element) =>
+    element.id === el.id
+      ? { ...element, type: newType }
+      : element.id === id
+      ? { ...element, type: newType }
+      : element
   );
 };
