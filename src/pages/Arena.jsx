@@ -21,7 +21,7 @@ export default function Arena() {
       {!simulationStarted && (
         <div class="flex flex-col items-center justify-center w-full h-screen">
           <Title title={"Rock Paper Scissor Wars"} />
-          <Button startSimulation={startSimulation} />
+          <Button method={startSimulation} title="New Game" />
         </div>
       )}
       {simulationStarted && <Spawner elements={elements} />}
