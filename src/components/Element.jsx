@@ -2,8 +2,8 @@ import { useDraggable } from "@dnd-kit/core";
 import React, { useState, useEffect } from "react";
 
 const Element = ({ element, id, onCollision }) => {
-  const gridWidth = window.innerWidth; // 50% of the window width
-  const gridHeight = window.innerHeight; // 50% of the window height
+  const gridWidth = window.innerWidth;
+  const gridHeight = window.innerHeight;
 
   const [position, setPosition] = useState({
     x: Math.random() * (gridWidth - 50),
