@@ -1,4 +1,3 @@
-import { useDraggable } from "@dnd-kit/core";
 import React, { useState, useEffect } from "react";
 
 const Element = ({ element, id, onCollision }) => {
@@ -8,10 +7,6 @@ const Element = ({ element, id, onCollision }) => {
   const [position, setPosition] = useState({
     x: Math.random() * (gridWidth - 50),
     y: Math.random() * (gridHeight - 50),
-  });
-
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({
-    id,
   });
 
   const directions = [
@@ -74,15 +69,10 @@ const Element = ({ element, id, onCollision }) => {
 
   return (
     <div
-      ref={setNodeRef}
       className="absolute text-4xl transition-transform duration-100"
       style={{
-        transform: `translate(${position.x + (transform?.x || 0)}px, ${
-          position.y + (transform?.y || 0)
-        }px)`,
+        transform: `translate(${position.x}px, ${position.y}px)`,
       }}
-      {...listeners}
-      {...attributes}
     >
       {element}
     </div>
