@@ -1,14 +1,22 @@
 import Button from "../components/Button";
 import Spawner from "../components/Spawner";
 import { useState } from "react";
+import { useRecoilState } from "recoil";
 import Title from "../components/Title";
-import { elements } from "../utils/elementUtils";
+import { elements, generateDefaultWinCount } from "../utils/elementUtils";
+import { elementWinCountState, resetRecoilState } from "../state/recoilState";
 
 export default function Arena() {
   const [simulationStarted, setSimulationStarted] = useState(false);
+  const [winCount, setWinCount] = useRecoilState(elementWinCountState);
 
   const startSimulation = () => {
     setSimulationStarted(true);
+  };
+
+  const resetToInitialScreen = () => {
+    resetRecoilState([() => setWinCount(generateDefaultWinCount())]);
+    setSimulationStarted(false);
   };
 
   return (
@@ -19,7 +27,9 @@ export default function Arena() {
           <Button method={startSimulation} title="New Game" />
         </div>
       )}
-      {simulationStarted && <Spawner elements={elements} />}
+      {simulationStarted && (
+        <Spawner elements={elements} onGameOver={resetToInitialScreen} />
+      )}
     </div>
   );
 }

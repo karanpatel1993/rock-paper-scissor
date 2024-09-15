@@ -8,7 +8,7 @@ import { useRecoilState } from "recoil";
 import { elementWinCountState } from "../state/recoilState";
 import { ScoreCard } from "./Scorecard";
 
-const Spawner = ({ elements }) => {
+const Spawner = ({ elements, onGameOver }) => {
   const [winCount, setWinCount] = useRecoilState(elementWinCountState);
   const [allElements, setAllElements] = useState(generateElements(elements));
   const [gameOver, setGameOver] = useState(false);
@@ -36,11 +36,12 @@ const Spawner = ({ elements }) => {
 
   if (gameOver) {
     return (
-      <div className="flex flex-col items-center justify-center h-screen">
+      <div className="flex flex-col items-center justify-center h-screen space-y-4">
         <Title title="Game Over!" />
         <Title title="Wins!" icon={winnerType} />
         <Button method={resetGame} title="Play Again" />
         <ScoreCard winCount={winCount} />
+        <Button method={onGameOver} title="Reset Game" />
       </div>
     );
   }

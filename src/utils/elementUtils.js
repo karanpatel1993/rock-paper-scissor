@@ -4,6 +4,13 @@ export const elements = [
   { element: "✂️", count: 50 },
 ];
 
+export const generateDefaultWinCount = () => {
+  return elements.reduce((acc, { element }) => {
+    acc[element] = 0;
+    return acc;
+  }, {});
+};
+
 export const ElementMapping = {
   "✂️": new Audio(`/sounds/scissor.mp3`),
   "🪨": new Audio(`/sounds/rock.mp3`),
