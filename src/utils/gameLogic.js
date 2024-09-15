@@ -10,7 +10,7 @@ export const handleCollision = (
   setAllElements((prevElements) => {
     // Find the element that moved
     const currentElement = prevElements.find((el) => el.id === id);
-    if (!currentElement || !currentElement.isVisible) return prevElements;
+    if (!currentElement) return prevElements;
 
     // Update the position of the moved element
     let updatedElements = prevElements.map((el) =>
@@ -19,8 +19,7 @@ export const handleCollision = (
 
     // Detect collisions with the updated position
     const collidedElements = updatedElements.filter(
-      (e) =>
-        e.id !== id && e.isVisible && detectCollision(e.position, newPosition)
+      (e) => e.id !== id && detectCollision(e.position, newPosition)
     );
 
     // Handle collisions based on Rock-Paper-Scissors rules
@@ -29,13 +28,13 @@ export const handleCollision = (
         playSound(currentElement.type);
         // Make the losing element invisible
         updatedElements = updatedElements.map((el) =>
-          el.id === e.id ? { ...el, isVisible: false } : el
+          el.id === e.id ? { ...el, type: currentElement.type } : el
         );
       } else if (isWinner(e.type, currentElement.type)) {
         // Make the current element invisible
-        playSound(currentElement.type);
+        playSound(e.type);
         updatedElements = updatedElements.map((el) =>
-          el.id === id ? { ...el, isVisible: false } : el
+          el.id === id ? { ...el, type: e.type } : el
         );
       }
     });

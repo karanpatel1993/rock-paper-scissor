@@ -12,7 +12,6 @@ const Spawner = ({ elements }) => {
           x: Math.random() * window.innerWidth * 0.5,
           y: Math.random() * window.innerHeight * 0.5,
         },
-        isVisible: true,
       }))
     )
   );
@@ -26,19 +25,17 @@ const Spawner = ({ elements }) => {
         pointerEvents: "none",
       }}
     >
-      {allElements
-        .filter((el) => el.isVisible)
-        .map(({ id, type, position }) => (
-          <Element
-            key={id}
-            id={id}
-            element={type}
-            position={position}
-            onCollision={(id, newPosition) =>
-              handleCollision(id, newPosition, allElements, setAllElements)
-            }
-          />
-        ))}
+      {allElements.map(({ id, type, position }) => (
+        <Element
+          key={id}
+          id={id}
+          element={type}
+          position={position}
+          onCollision={(id, newPosition) =>
+            handleCollision(id, newPosition, allElements, setAllElements)
+          }
+        />
+      ))}
     </div>
   );
 };
