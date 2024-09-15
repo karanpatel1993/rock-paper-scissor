@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import Element from "./Element";
 import { detectCollision } from "../utils";
+import { playSound, isWinner } from "../utils/elementUtils";
 
-const Spwaner = ({ elements, top, left }) => {
+const Spawner = ({ elements }) => {
   const [allElements, setAllElements] = useState(
     elements.flatMap(({ element, count }) =>
       Array.from({ length: count }, (_, index) => ({
@@ -12,21 +13,10 @@ const Spwaner = ({ elements, top, left }) => {
           x: Math.random() * window.innerWidth * 0.5,
           y: Math.random() * window.innerHeight * 0.5,
         },
-        isVisible: true, // New property to track visibility
+        isVisible: true,
       }))
     )
   );
-
-  const ElementMapping = {
-    "✂️": new Audio(`/sounds/scissor.mp3`),
-    "🪨": new Audio(`/sounds/rock.mp3`),
-    "📜": new Audio(`/sounds/paper.mp3`),
-  };
-
-  const playSound = (type) => {
-    const audio = ElementMapping[type];
-    audio.play();
-  };
 
   const handleCollision = (id, newPosition) => {
     setAllElements((prevElements) => {
@@ -66,20 +56,10 @@ const Spwaner = ({ elements, top, left }) => {
     });
   };
 
-  const isWinner = (type1, type2) => {
-    return (
-      (type1 === "🪨" && type2 === "✂️") ||
-      (type1 === "✂️" && type2 === "📜") ||
-      (type1 === "📜" && type2 === "🪨")
-    );
-  };
-
   return (
     <div
       className="absolute"
       style={{
-        top: `${top}px`,
-        left: `${left}px`,
         width: "100%",
         height: "100%",
         pointerEvents: "none",
@@ -100,4 +80,4 @@ const Spwaner = ({ elements, top, left }) => {
   );
 };
 
-export default Spwaner;
+export default Spawner;

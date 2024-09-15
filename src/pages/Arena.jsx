@@ -1,5 +1,5 @@
 import Button from "../components/Button";
-import Spwaner from "../components/Spwaner";
+import Spawner from "../components/Spawner";
 import { useState } from "react";
 import Title from "../components/Title";
 
@@ -24,7 +24,7 @@ export default function Arena() {
           <Button startSimulation={startSimulation} />
         </div>
       )}
-      {simulationStarted && <Spwaner elements={elements} top={0} left={0} />}
+      {simulationStarted && <Spawner elements={elements} />}
     </div>
   );
 }
