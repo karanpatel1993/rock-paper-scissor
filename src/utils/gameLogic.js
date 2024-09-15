@@ -5,7 +5,9 @@ export const handleCollision = (
   id,
   newPosition,
   allElements,
-  setAllElements
+  setAllElements,
+  setGameOver,
+  setWinnerType
 ) => {
   setAllElements((prevElements) => {
     // Find the element that moved
@@ -38,6 +40,14 @@ export const handleCollision = (
         );
       }
     });
+
+    // Check if all elements are of the same type
+    const types = new Set(updatedElements.map((el) => el.type));
+    if (types.size === 1) {
+      // Set the winner type and trigger game over
+      setWinnerType([...types][0]);
+      setGameOver(true);
+    }
 
     return updatedElements;
   });

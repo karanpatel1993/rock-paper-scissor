@@ -20,7 +20,7 @@ export default function Arena() {
     <div className="font-extrabold text-lg relative w-full h-screen flex justify-center items-center">
       {!simulationStarted && (
         <div class="flex flex-col items-center justify-center w-full h-screen">
-          <Title />
+          <Title title={"Rock Paper Scissor Wars"} />
           <Button startSimulation={startSimulation} />
         </div>
       )}

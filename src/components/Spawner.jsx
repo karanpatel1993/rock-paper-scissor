@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Element from "./Element";
 import { handleCollision } from "../utils/gameLogic";
+import Title from "./Title";
 
 const Spawner = ({ elements }) => {
   const [allElements, setAllElements] = useState(
@@ -15,6 +16,13 @@ const Spawner = ({ elements }) => {
       }))
     )
   );
+
+  const [gameOver, setGameOver] = useState(false);
+  const [winnerType, setWinnerType] = useState(null);
+
+  if (gameOver) {
+    return <Title title="Wins!" icon={winnerType} />;
+  }
 
   return (
     <div
@@ -32,7 +40,14 @@ const Spawner = ({ elements }) => {
           element={type}
           position={position}
           onCollision={(id, newPosition) =>
-            handleCollision(id, newPosition, allElements, setAllElements)
+            handleCollision(
+              id,
+              newPosition,
+              allElements,
+              setAllElements,
+              setGameOver,
+              setWinnerType
+            )
           }
         />
       ))}
