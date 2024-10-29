@@ -17,6 +17,11 @@ export const ElementMapping = {
   "📜": new Audio(`/sounds/paper.mp3`),
 };
 
+export const gameModes = [
+  { value: "classic", label: "Classic" },
+  { value: "special", label: "Special" },
+];
+
 export const playSound = (type) => {
   const audio = ElementMapping[type];
   audio.play();
