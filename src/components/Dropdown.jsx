@@ -4,7 +4,7 @@ export default function Dropdown({ value, onChange, options, className }) {
       <select
         value={value}
         onChange={onChange}
-        className="relative block w-32 h-12 px-4 py-2 text-sm font-medium text-white bg-slate-950 border border-slate-700 rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
+        className="relative block w-32 h-12 px-3 py-2 text-lg font-medium text-white bg-slate-950 border border-slate-700 rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
       >
         {options.map((option) => (
           <option key={option.value} value={option.value}>

@@ -6,6 +6,7 @@ import { useRecoilState } from "recoil";
 import Title from "../components/Title";
 import {
   elements,
+  specialElements,
   generateDefaultWinCount,
   gameModes,
 } from "../utils/elementUtils";
@@ -44,7 +45,14 @@ export default function Arena() {
         </div>
       )}
       {simulationStarted && (
-        <Spawner elements={elements} onGameOver={resetToInitialScreen} />
+        <Spawner
+          elements={
+            selectedGameMode === "special"
+              ? [...elements, ...specialElements]
+              : elements
+          }
+          onGameOver={resetToInitialScreen}
+        />
       )}
     </div>
   );

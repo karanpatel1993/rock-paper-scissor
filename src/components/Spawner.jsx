@@ -36,7 +36,7 @@ const Spawner = ({ elements, onGameOver }) => {
 
   if (gameOver) {
     return (
-      <div className="flex flex-col items-center justify-center h-screen space-y-4">
+      <div className="flex flex-col items-center justify-center h-screen space-y-4 w-full">
         <Title title="Game Over!" />
         <Title title="Wins!" icon={winnerType} />
         <Button method={resetGame} title="Play Again" />

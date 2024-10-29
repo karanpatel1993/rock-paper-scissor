@@ -4,8 +4,14 @@ export const elements = [
   { element: "✂️", count: 50 },
 ];
 
+export const specialElements = [
+  { element: "🦎", count: 50 },
+  { element: "🖖🏻", count: 50 },
+];
+
 export const generateDefaultWinCount = () => {
-  return elements.reduce((acc, { element }) => {
+  const combinedElements = [...elements, ...specialElements];
+  return combinedElements.reduce((acc, { element }) => {
     acc[element] = 0;
     return acc;
   }, {});
@@ -15,6 +21,8 @@ export const ElementMapping = {
   "✂️": new Audio(`/sounds/scissor.mp3`),
   "🪨": new Audio(`/sounds/rock.mp3`),
   "📜": new Audio(`/sounds/paper.mp3`),
+  "🦎": new Audio(`/sounds/lizard.mp3`),
+  "🖖🏻": new Audio(`/sounds/spock.mp3`),
 };
 
 export const gameModes = [
@@ -30,8 +38,15 @@ export const playSound = (type) => {
 export const isWinner = (type1, type2) => {
   return (
     (type1 === "🪨" && type2 === "✂️") ||
+    (type1 === "🪨" && type2 === "🦎") ||
     (type1 === "✂️" && type2 === "📜") ||
-    (type1 === "📜" && type2 === "🪨")
+    (type1 === "✂️" && type2 === "🦎") ||
+    (type1 === "📜" && type2 === "🪨") ||
+    (type1 === "📜" && type2 === "🖖🏻") ||
+    (type1 === "🦎" && type2 === "🖖🏻") ||
+    (type1 === "🦎" && type2 === "📜") ||
+    (type1 === "🖖🏻" && type2 === "✂️") ||
+    (type1 === "🖖🏻" && type2 === "🪨")
   );
 };
 
