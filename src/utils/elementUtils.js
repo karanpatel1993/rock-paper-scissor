@@ -1,13 +1,10 @@
 export const elements = [
-  { element: "📜", count: 50 },
-  { element: "🪨", count: 50 },
-  { element: "✂️", count: 50 },
+  { element: "📜" },
+  { element: "🪨" },
+  { element: "✂️" },
 ];
 
-export const specialElements = [
-  { element: "🦎", count: 50 },
-  { element: "🖖🏻", count: 50 },
-];
+export const specialElements = [{ element: "🦎" }, { element: "🖖🏻" }];
 
 export const generateDefaultWinCount = () => {
   const combinedElements = [...elements, ...specialElements];
@@ -55,7 +52,6 @@ export const generateElements = (elements) => {
     (window.innerWidth + window.innerHeight) / 50
   );
 
-  console.log("screenFactor", screenFactor);
   return elements.flatMap(({ element }) =>
     Array.from({ length: screenFactor }, (_, index) => ({
       id: `${element}-${index}`,
