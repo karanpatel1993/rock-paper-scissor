@@ -8,20 +8,21 @@ import { useRecoilState } from "recoil";
 import { elementWinCountState } from "../state/recoilState";
 import { ScoreCard } from "./Scorecard";
 
-const Spawner = ({ elements, onGameOver }) => {
+const Spawner = ({ elements, onGameOver, gameMode }) => {
   const [winCount, setWinCount] = useRecoilState(elementWinCountState);
-  const [allElements, setAllElements] = useState(generateElements(elements));
+  const [allElements, setAllElements] = useState(
+    generateElements(elements, gameMode)
+  );
   const [gameOver, setGameOver] = useState(false);
   const [winnerType, setWinnerType] = useState(null);
 
   const resetGame = () => {
-    setAllElements(generateElements(elements));
+    setAllElements(generateElements(elements, gameMode));
     setGameOver(false);
     setWinnerType(null);
   };
 
   const updateWinCount = (type) => {
-    console.log("Update win for type " + type);
     setWinCount((prevCount) => ({
       ...prevCount,
       [type]: (prevCount[type] || 0) + 1,

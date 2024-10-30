@@ -47,10 +47,12 @@ export const isWinner = (type1, type2) => {
   );
 };
 
-export const generateElements = (elements) => {
-  const screenFactor = Math.floor(
-    (window.innerWidth + window.innerHeight) / 50
-  );
+export const generateElements = (elements, gameMode) => {
+  let screenFactor = Math.floor((window.innerWidth + window.innerHeight) / 50);
+
+  if (gameMode === "special") {
+    screenFactor *= 0.7;
+  }
 
   return elements.flatMap(({ element }) =>
     Array.from({ length: screenFactor }, (_, index) => ({

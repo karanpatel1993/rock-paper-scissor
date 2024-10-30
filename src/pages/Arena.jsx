@@ -52,6 +52,7 @@ export default function Arena() {
               : elements
           }
           onGameOver={resetToInitialScreen}
+          gameMode={selectedGameMode}
         />
       )}
     </div>
