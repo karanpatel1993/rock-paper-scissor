@@ -51,8 +51,13 @@ export const isWinner = (type1, type2) => {
 };
 
 export const generateElements = (elements) => {
-  return elements.flatMap(({ element, count }) =>
-    Array.from({ length: count }, (_, index) => ({
+  const screenFactor = Math.floor(
+    (window.innerWidth + window.innerHeight) / 50
+  );
+
+  console.log("screenFactor", screenFactor);
+  return elements.flatMap(({ element }) =>
+    Array.from({ length: screenFactor }, (_, index) => ({
       id: `${element}-${index}`,
       type: element,
       position: {
