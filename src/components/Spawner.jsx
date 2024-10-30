@@ -41,7 +41,7 @@ const Spawner = ({ elements, onGameOver, gameMode }) => {
         <Title title="Game Over!" />
         <Title title="Wins!" icon={winnerType} />
         <Button method={resetGame} title="Play Again" />
-        <ScoreCard winCount={winCount} />
+        <ScoreCard winCount={winCount} gameMode={gameMode} />
         <Button method={onGameOver} title="Reset Game" />
       </div>
     );
